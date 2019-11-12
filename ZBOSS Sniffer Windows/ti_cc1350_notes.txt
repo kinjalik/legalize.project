@@ -1,0 +1,5 @@
+In order to set up cc1350 sniffer follow these steps:
+1. Download and install XDS emupack from http://processors.wiki.ti.com/index.php/XDS_Emulation_Software_Package
+2. Download Uniflash from http://www.ti.com/tool/uniflash
+3. Connect CC1350 board to PC, wait until the device is disovered and prepared for use.
+4. Flash cc1350_sniffer.hex firmware using Uniflash.
