@@ -11,17 +11,17 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body>
+<body class="pb-4">
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center pb-3">
             <div class="col-12 d-flex justify-content-center">
                 <h1>Веселая лабуда</h1>
             </div>
             <div class="col-12">
                 <div class="row justify-content-center">
                     <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
-                        <button class="btn btn-success">Rescan</button>
-                        <button id="modeMin" class="btn btn-primary" disabled>За минуту</button>
+                        <button id="rescan" class="btn btn-success">Rescan</button>
+                        <button id="modeMin" class="btn btn-primary">За минуту</button>
                         <button id="modeHour" class="btn btn-primary">За час</button>
                         <button id="modeDay" class="btn btn-primary">За сутки</button>
                     </div>
@@ -32,9 +32,28 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-6">
-                
                 <canvas class="plot_container" id="intensivity_container"></canvas>
             </div>
+            <div class="col-6">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">PanID</th>
+                            <th scope="col">MAC-Адрес</th>
+                            <th scope="col">Производитель</th>
+                            <th scope="col">Тип устройства</th>
+                            <th scope="col">Уровень сигнала (дБ)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="device_list">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row" id="cards_container">
+            
         </div>
     </div>
     <script src="js/jquery.js"></script>
