@@ -1,0 +1,16 @@
+[
+    {
+        "panID": "0x3884",
+        "mac": "23:f3:3f::52",
+        "manufacturer": "xiaomi",
+        "type": "sensor",
+        "signal": 67
+    },
+    {
+        "panID": "0x7fe4",
+        "mac": "fa:fa:3f::52",
+        "manufacturer": "aqara",
+        "type": "swticher",
+        "signal": 45
+    }
+]
