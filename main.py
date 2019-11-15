@@ -4,10 +4,11 @@
 
 import pyshark
 import time
+import subprocess
 
-capture = pyshark.FileCapture('/tmp/whsniff')
 num = 1
 while True:
+    capture = pyshark.FileCapture('/tmp/whsniff')
     for pack in capture:
             try:
                 aps = str(pack['ZBEE_APS']).split()
@@ -44,7 +45,6 @@ while True:
             num += 1
             # {'sensor': sensor, 'value': value}
             print(ret)
-    f = open('/tmp/whsniff', 'w')
-    f.close()
+    # f = open('/tmp/whsniff', 'w')
+    # f.close()
     time.sleep(1)
-    capture = pyshark.FileCapture('/tmp/whsniff')
