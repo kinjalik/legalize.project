@@ -6,17 +6,18 @@ import pyshark
 import time
 import subprocess
 
-num = 1
 while True:
     capture = pyshark.FileCapture('/tmp/whsniff')
-    for pack in capture:
-            try:
-                aps = str(pack['ZBEE_APS']).split()
-                ind = aps.index('Cluster:')
-            except:
-                num += 1
+    for num, pack in enumerate(capture):
+            if "ZBEE_APS" not in pack:
                 continue
+            
+            aps = str(pack['ZBEE_APS']).split()
+            ind = aps.find('Cluster:')
 
+            if ind == -1:
+                continue
+            
             i = 1
 
             sensor = ''
@@ -25,7 +26,6 @@ while True:
                 sensor += aps[ind + i]
                 i += 1
             if sensor == ' Occupancy Sensing (0x0406)':
-                num += 1
                 continue
             ret = {}
             # print(num, ') ', end='', sep='')
@@ -42,7 +42,7 @@ while True:
             else:
                 ret['value'] = pack['ZBEE_ZCL'].get_field_by_showname('Measured Value')
                 # print(pack['ZBEE_ZCL'].get_field_by_showname('Measured Value'))
-            num += 1
+
             # {'sensor': sensor, 'value': value}
             print(ret)
     # f = open('/tmp/whsniff', 'w')
