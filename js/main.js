@@ -1,4 +1,12 @@
-async function initIntensivity(arg) {
+const timeModeButtons = {
+    'min': document.querySelector("#modeMin"),
+    'hour': document.querySelector("#modeHour"),
+    'day': document.querySelector("#modeDay")
+}
+let currentMode = 'min';    
+timeModeButtons[currentMode] = true;
+
+async function initIntensivity() {
     const container = $("#intensivity_container");
     console.log("Started")
     let xhr = new XMLHttpRequest();
