@@ -1,0 +1,53 @@
+[{
+    "panID": "0xfeb5",
+    "mac": "fa:fa:3f::52",
+    "manufacturer": "Manufacturer",
+    "type": "Device Type",
+    "data": [{
+        "key": "Property 1",
+        "value": 42
+    }, {
+        "key": "Property 2",
+        "value": 1
+    }, {
+        "key": "Property 3",
+        "value": 0
+    }, {
+        "key": "Property 4",
+        "value": 422
+    }]
+}, {
+    "panID": "0xfeb5",
+    "mac": "fa:fa:3f::52",
+    "manufacturer": "xiaomi",
+    "type": "sensor",
+    "data": [{
+        "key": "light measure",
+        "value": 42
+    }, {
+        "key": "occupied",
+        "value": 1
+    }]
+}, {
+    "panID": "0xfeb5",
+    "mac": "fa:fa:3f::52",
+    "manufacturer": "xiaomi",
+    "type": "sensor",
+    "data": [{
+        "key": "light measure",
+        "value": 42
+    }, {
+        "key": "occupied",
+        "value": 1
+    }]
+}, {
+    "panID": "0x6347",
+    "mac": "fa:fa:3f::52",
+    "manufacturer": "aqara",
+    "type": "switch",
+    "data": [{
+        "key": "state",
+        "value": 0
+    }]
+}]
+
