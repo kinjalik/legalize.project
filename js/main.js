@@ -1,5 +1,5 @@
-const BACKEND_IP = "";
-const fake_mode = true;
+const BACKEND_IP = "http://10.91.7.152:2528";
+const fake_mode = false;
 
 const timeModeButtons = {
     'min': document.querySelector("#modeMin"),
@@ -24,7 +24,9 @@ async function initIntensivity() {
     const container = $("#intensivity_container");
     container.innerHTML = "";
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", fake_mode ? "api/packet_intensivity.json" : BACKEND_IP + "/api/intensivity")
+    
+    xhr.open("GET",  "api_placeholders/packet_intensivity.json")
+    // xhr.open("GET",  "api_placeholders/packet_intensivity.json")
     
     xhr.onload = () => {
         const dataSet = JSON.parse(xhr.response);
@@ -67,6 +69,7 @@ async function drawDeviceList() {
     container.innerHTML = "";
 
     let xhr = new XMLHttpRequest();
+    console.log(fake)
     xhr.open("GET", fake_mode ? "api_placeholders/devices.json" : BACKEND_IP + "/api/intensivity")
     xhr.onload = () => {
         const dataSet = JSON.parse(xhr.response);
@@ -90,24 +93,20 @@ async function drawDeviceCards() {
     const container = document.querySelector("#cards_container");
     container.innerHTML = "";
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "api_placeholders/full-device-list.json");
+    xhr.open("GET", BACKEND_IP + "/api/devices");
     xhr.onload = () => {
+        console.log(xhr.response)
         const dataSet = JSON.parse(xhr.response);
         console.log(dataSet);
         for (let device of dataSet) {
-            let props = "";
-            for (let prop of device.data) {
-                props += `<li class="list-group-item"><b>${prop.key}</b>: ${prop.value}</li>`
-            }
+            console.log(device)
             container.innerHTML = container.innerHTML + `<div class="col-3">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">${device.type} by ${device.manufacturer}</h5>
-                </div>
                 <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><b>PanID</b>: ${device.panID}</li>
-                        <li class="list-group-item"><b>MAC</b>: ${device.mac}</li>
-                        ${props}
+                    <li class="list-group-item"><b>PanID</b>: ${device.panID}</li>
+                    <li class="list-group-item"><b>MAC</b>: ${device.mac}</li>
+                    <li class="list-group-item"><b>RSSI</b>: ${device.rssi}</li>
+                    <li class="list-group-item"><b>${device.data.sensor}</b>: ${device.data.value}</li>
                 </ul>
             </div>
         </div>`
@@ -118,7 +117,10 @@ async function drawDeviceCards() {
 
 function reload() {
     console.log("Scanning...");
-    Promise.all([initIntensivity(), drawDeviceList(), drawDeviceCards() ]);
+    Promise.all([
+        initIntensivity(), 
+        //drawDeviceList(), 
+        drawDeviceCards() ]);
 }
 
 reload();
