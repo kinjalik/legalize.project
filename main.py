@@ -4,26 +4,27 @@
 
 import pyshark
 import time
-import subprocess
 
+capture = pyshark.FileCapture('/tmp/whsniff')
+num = 1
 while True:
-    capture = pyshark.FileCapture('/tmp/whsniff')
-    for num, pack in enumerate(capture):
-            if "ZBEE_APS" not in pack:
-                continue
-            
-            aps = str(pack['ZBEE_APS'])
-            cluster_ind = aps.find('Cluster:')
-
-            if cluster_ind == -1:
+    for package in capture:
+            try:
+                aps = str(package['ZBEE_APS']).split()
+                ind = aps.index('Cluster:')
+            except:
+                num += 1
                 continue
 
-            profile_ind = aps.find('Profile:')
+            i = 1
+            # print(aps)
+            sensor = ''
+            while aps[ind + i] != 'Profile:':
+                sensor += ' '
+                sensor += aps[ind + i]
+                i += 1
 
-            sensor = aps[cluster_ind + 8:profile_ind] 
-            
-            if sensor == ' Occupancy Sensing (0x0406)':
-                continue
+
             ret = {}
             # print(num, ') ', end='', sep='')
             # print('Датчик:', end='')
@@ -31,17 +32,18 @@ while True:
             ret['sensor'] = sensor[1:]
             # print('; ', end='')
             # print('value: ', end='')
-            value = pack['ZBEE_ZCL'].get_field_by_showname('Measured Value')
+            value = package['ZBEE_ZCL'].get_field_by_showname('Measured Value')
 
             if sensor == ' Temperature Measurement (0x0402)' or sensor == ' Relative Humidity Measurement (0x0405)':
                 ret['value'] = value[:-2] + ',' + value[-2:]
                 # print(value[:-2] + ',' + value[-2:])
             else:
-                ret['value'] = pack['ZBEE_ZCL'].get_field_by_showname('Measured Value')
+                ret['value'] = package['ZBEE_ZCL'].get_field_by_showname('Measured Value')
                 # print(pack['ZBEE_ZCL'].get_field_by_showname('Measured Value'))
-
+            num += 1
             # {'sensor': sensor, 'value': value}
             print(ret)
-    # f = open('/tmp/whsniff', 'w')
-    # f.close()
+    f = open('/tmp/whsniff', 'w')
+    f.close()
     time.sleep(1)
+    capture = pyshark.FileCapture('/tmp/whsniff')
