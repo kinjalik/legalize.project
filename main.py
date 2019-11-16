@@ -12,19 +12,16 @@ while True:
             if "ZBEE_APS" not in pack:
                 continue
             
-            aps = str(pack['ZBEE_APS']).split()
-            ind = aps.find('Cluster:')
+            aps = str(pack['ZBEE_APS'])
+            cluster_ind = aps.find('Cluster:')
 
-            if ind == -1:
+            if cluster_ind == -1:
                 continue
-            
-            i = 1
 
-            sensor = ''
-            while aps[ind + i] != 'Profile:':
-                sensor += ' '
-                sensor += aps[ind + i]
-                i += 1
+            profile_ind = aps.find('Profile:')
+
+            sensor = aps[cluster_ind + 8:profile_ind] 
+            
             if sensor == ' Occupancy Sensing (0x0406)':
                 continue
             ret = {}
