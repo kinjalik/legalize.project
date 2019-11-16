@@ -23,15 +23,21 @@ while True:
         if sensor == ' Occupancy Sensing (0x0406)':
             continue
 
-        ret = {}
-        ret['sensor'] = sensor[1:]
+        data = {}  # data
+        data['sensor'] = sensor[1:]
         value = pack['ZBEE_ZCL'].get_field_by_showname('Measured Value')
 
         if sensor.split()[-1] == '(0x0402)' or sensor.split()[-1] == '(0x0405)':
-            ret['value'] = value[:-2] + ',' + value[-2:]
+            data['value'] = value[:-2] + ',' + value[-2:]
         else:
-            ret['value'] = pack['ZBEE_ZCL'].get_field_by_showname('Measured Value')
-        print(ret)
+            data['value'] = pack['ZBEE_ZCL'].get_field_by_showname('Measured Value')
+
+
+        return_values = {}
+        return_values['data'] = data
+        return_values['panID'] = pack.wpan.get_field_by_showname('Destination PAN')[:2] + pack.wpan.get_field_by_showname('Destination PAN')[6:]
+        print(return_values)
+
     f = open('/tmp/whsniff', 'w')
     f.close()
     time.sleep(0.1)
