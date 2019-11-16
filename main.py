@@ -9,9 +9,9 @@
 import pyshark
 import time
 
-# while True:
-for fdas in range(1):
-    capture = pyshark.FileCapture('cap.pcap')
+while True:
+# for fdas in range(1):
+    capture = pyshark.FileCapture('/tmp/whsniff')
     for num, pack in enumerate(capture):
         if "ZBEE_APS" not in pack:
             continue
