@@ -1,3 +1,6 @@
+const BACKEND_IP = "";
+const fake_mode = true;
+
 const timeModeButtons = {
     'min': document.querySelector("#modeMin"),
     'hour': document.querySelector("#modeHour"),
@@ -21,7 +24,7 @@ async function initIntensivity() {
     const container = $("#intensivity_container");
     container.innerHTML = "";
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "api_placeholders/packet_intensivity.json")
+    xhr.open("GET", fake_mode ? "api/packet_intensivity.json" : BACKEND_IP + "/api/intensivity")
     
     xhr.onload = () => {
         const dataSet = JSON.parse(xhr.response);
@@ -64,7 +67,7 @@ async function drawDeviceList() {
     container.innerHTML = "";
 
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "api_placeholders/devices.json")
+    xhr.open("GET", fake_mode ? "api_placeholders/devices.json" : BACKEND_IP + "/api/intensivity")
     xhr.onload = () => {
         const dataSet = JSON.parse(xhr.response);
         for (let device of dataSet) {
