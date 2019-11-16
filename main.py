@@ -9,8 +9,9 @@
 import pyshark
 import time
 
-while True:
-    capture = pyshark.FileCapture('/tmp/whsniff')
+# while True:
+for fdas in range(1):
+    capture = pyshark.FileCapture('cap.pcap')
     for num, pack in enumerate(capture):
         if "ZBEE_APS" not in pack:
             continue
@@ -36,6 +37,8 @@ while True:
         return_values = {}
         return_values['data'] = data
         return_values['panID'] = pack.wpan.get_field_by_showname('Destination PAN')[:2] + pack.wpan.get_field_by_showname('Destination PAN')[6:]
+        return_values['mac'] = pack.zbee_nwk.get_field_by_showname('Extended Source')
+        return_values['sequence_number'] = pack.zbee_zcl.get_field_by_showname('Sequence Number')
         print(return_values)
 
     f = open('/tmp/whsniff', 'w')
